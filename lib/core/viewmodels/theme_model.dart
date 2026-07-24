@@ -1,5 +1,6 @@
 import 'package:cardifly/config/storage_manager.dart';
 import 'package:cardifly/helper/theme_helper.dart';
+import 'package:cardifly/ui/theme/app_text.dart';
 import 'package:cardifly/utils/constants.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -55,38 +56,7 @@ class ThemeModel with ChangeNotifier {
     );
 
     return base.copyWith(
-      textTheme: base.textTheme
-          .apply(bodyColor: onSurface, displayColor: onSurface)
-          .copyWith(
-            titleLarge: TextStyle(
-              fontSize: 16,
-              fontWeight: FontWeight.w700,
-              color: onSurface,
-            ),
-            titleMedium: TextStyle(
-              fontSize: 13,
-              fontWeight: FontWeight.w600,
-              color: onSurface,
-            ),
-            titleSmall: TextStyle(
-              fontSize: 11,
-              fontWeight: FontWeight.w500,
-              color: onSurface.withValues(alpha: 0.7),
-            ),
-            displaySmall: TextStyle(
-              fontSize: 11,
-              color: onSurface.withValues(alpha: 0.6),
-            ),
-            bodyMedium: TextStyle(fontSize: 12, color: onSurface),
-            bodySmall: TextStyle(
-              fontSize: 11,
-              color: onSurface.withValues(alpha: 0.75),
-            ),
-            labelSmall: TextStyle(
-              fontSize: 10,
-              color: onSurface.withValues(alpha: 0.7),
-            ),
-          ),
+      textTheme: AppTextTheme.textThemeFor(onSurface),
       cupertinoOverrideTheme: CupertinoThemeData(
         primaryColor: Constants.appPrimaryColor,
         brightness: brightness,

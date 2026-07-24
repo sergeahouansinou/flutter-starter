@@ -23,23 +23,22 @@ class Constants {
   // App metadata
   static const appVersion = '2.0.3';
   static const appName = 'Cardifly';
-  static const authorName = 'KY SOLUTIONS';
-  static const authorPhone = '+33972369052';
-  static const authorEmail = 'contact@ky-solutions.fr';
-  static const appStoreId = '6670394729';
+  static const authorName = 'Serge AHOUANSINOU';
+  static const authorPhone = '+2290196504892';
+  static const authorEmail = 'sahouansinou@gmail.com';
 
   // URLs
-  static const sharingDomainUrl = 'https://app.cardifly.fr/';
-  static const liveBaseUrl = 'https://api-v2.cardifly.fr/';
-  static const testBaseUrl = 'https://api-cardifly.ky-solutions.net/';
-  static const localBaseUrl = 'http://192.168.1.115:8000/';
+  static const sharingDomainUrl = 'https://app.example.fr/';
+  static const liveBaseUrl = 'https://api.example.fr/';
+  static const testBaseUrl = 'https://example.net/';
+  static const localBaseUrl = 'http://REMOTE_IP:PORT/';
   static const baseUrl = localBaseUrl;
 
-  static const kySolutionsWebsite = 'https://ky-solutions.fr';
+  static const feInterSoftWebsite = 'https://feintersoft.fr';
   static const playstoreUrl =
-      'https://play.google.com/store/apps/details?id=ky.solutions.cardifly';
+      'https://play.google.com/store/apps/details?id=app.example.cardifly';
   static const appleStoreUrl =
-      'https://apps.apple.com/us/app/cardifly/id6670394729';
+      'https://apps.apple.com/us/app/cardifly/id............';
 
   // Palette
   static const Color appPrimaryColor = Color(0xFF0F70B7);

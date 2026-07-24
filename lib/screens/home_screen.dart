@@ -267,14 +267,14 @@ class _HomeHeader extends StatelessWidget {
               children: [
                 Text(
                   'Bonjour 👋',
-                  style: TextStyle(color: Colors.white70, fontSize: 10),
+                  style: TextStyle(color: Colors.white70, fontSize: 12),
                 ),
                 SizedBox(height: 1),
                 Text(
                   'Vos cartes Cardifly',
                   style: TextStyle(
                     color: Colors.white,
-                    fontSize: 13,
+                    fontSize: 14,
                     fontWeight: FontWeight.w700,
                   ),
                 ),
