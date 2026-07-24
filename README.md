@@ -160,37 +160,55 @@ class FooService extends BaseService {
 
 ## Paginated lists
 
-Extend `ViewStateRefreshListModel<T>`, implement `loadData({int? pageNum})`:
+Extend `ViewStateRefreshListModel<T>`, implement `loadData({int? pageNum})`.
+Live example (Dog API v2, wired end-to-end in the starter):
 
 ```dart
-class FooListModel extends ViewStateRefreshListModel<Foo> {
+// lib/core/viewmodels/breed_list_model.dart
+class BreedListModel extends ViewStateRefreshListModel<Breed> {
   @override
-  Future<List<Foo>> loadData({int? pageNum}) =>
-      FooService.list(page: pageNum ?? 1);
+  Future<List<Breed>> loadData({int? pageNum}) => BreedService.list(
+        page: pageNum ?? ViewStateRefreshListModel.pageNumFirst,
+        pageSize: ViewStateRefreshListModel.pageSize,
+      );
 }
 ```
 
-Then in the screen:
+Registered in `provider_manager.dart`, then consumed by `HomeScreen`:
 
 ```dart
-AppPullToRefresh(
+final model = context.watch<BreedListModel>();
+if (model.busy && model.list.isEmpty) return const AppListSkeleton();
+if (model.viewState == ViewState.error && model.list.isEmpty) {
+  return AppErrorState(onRetry: model.initData);
+}
+
+return AppPullToRefresh(
   controller: model.refreshController,
-  onRefresh: () => model.refresh(),
+  onRefresh: () => model.refresh().then((_) {}),
   onLoadMore: () => model.loadMore().then((_) {}),
   child: CustomScrollView(
     controller: model.refreshController.scrollController,
     slivers: [
       SliverList.builder(
         itemCount: model.list.length,
-        itemBuilder: (_, i) => FooTile(model.list[i]),
+        itemBuilder: (_, i) => BreedTile(breed: model.list[i]),
       ),
       SliverToBoxAdapter(
         child: AppLoadMoreFooter(controller: model.refreshController),
       ),
     ],
   ),
-)
+);
 ```
+
+### External APIs (Dog API v2)
+
+External services with a **different response envelope** than the app's
+API deserve their own Dio instance so they don't inherit auth headers or
+the `ApiInterceptor` (which unwraps the app's `{data, error_message}`
+envelope). See `lib/config/net/dog_api.dart` — 20 lines, one `Dio`, one
+debug interceptor, aliased as `dogHttp` for services to consume.
 
 ---
 

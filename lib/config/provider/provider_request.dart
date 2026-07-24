@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:cardifly/anims/page_route_anim.dart';
 import 'package:cardifly/config/provider/view/view_state.dart';
 import 'package:cardifly/main.dart';
-import 'package:cardifly/screens/home_screen.dart';
+import 'package:cardifly/screens/home_one/home_screen.dart';
 import 'package:cardifly/utils/types/feedback_type.dart';
 import 'package:cardifly/utils/util.dart';
 import 'package:dio/dio.dart';

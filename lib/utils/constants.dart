@@ -65,6 +65,13 @@ class Constants {
     ),
   ];
 
+  // Assets — local pictures used when the API ships no image
+  static const String dogsAssetsPath = 'assets/dogs';
+  static const List<String> dogPlaceholders = [
+    '$dogsAssetsPath/dog_one.png',
+    '$dogsAssetsPath/dog_two.png',
+  ];
+
   // Feedback tokens
   static const String success = 'success';
 
