@@ -293,8 +293,8 @@ class _WaveOrbitDotsState extends State<_WaveOrbitDots>
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: 34,
-      height: 24,
+      width: 40,
+      height: 28,
       child: AnimatedBuilder(
         animation: _controller,
         builder: (context, _) => CustomPaint(
@@ -314,73 +314,93 @@ class _WaveOrbitPainter extends CustomPainter {
   final double progress;
   final Color color;
 
-  // Phase breakpoints of the loop.
-  static const double _waveInEnd = 0.20;
-  static const double _morphToCircleEnd = 0.30;
-  static const double _rotateEnd = 0.70;
-  static const double _morphToLineEnd = 0.80;
+  // Loop breakpoints (fractions of the full animation cycle).
+  static const double _p1End = 0.28; // wave-in
+  static const double _p2End = 0.38; // line → circle morph
+  static const double _p3End = 0.62; // full circular orbit
+  static const double _p4End = 0.72; // circle → line morph
+  // 0.72 → 1.00 = wave-out
+
+  // Sequential-bounce wave: each dot lights up in turn, guaranteed to
+  // return to y=0 at both ends of the phase (so morph transitions and
+  // the overall loop are continuous).
+  static double _waveY(double phaseT, int i, double amplitude) {
+    const dotStagger = 0.18;
+    const dotDuration = 0.55;
+    final start = i * dotStagger;
+    final localT = ((phaseT - start) / dotDuration).clamp(0.0, 1.0);
+    if (localT <= 0 || localT >= 1) return 0;
+    return -math.sin(localT * math.pi) * amplitude;
+  }
 
   @override
   void paint(Canvas canvas, Size size) {
-    const dotRadius = 2.6;
-    const spacing = 4.5;
-    const orbitRadius = 8.0;
+    const dotRadius = 2.8;
+    const spacing = 5.0;
+    const orbitRadius = 9.0;
+    const waveAmplitude = dotRadius * 2.5;
 
     final centerX = size.width / 2;
     final centerY = size.height / 2;
     final t = progress;
 
-    for (var i = 0; i < 3; i++) {
+    Offset linePos(int i, double waveT) {
       final lineX = centerX + (i - 1) * (dotRadius * 2 + spacing);
+      return Offset(lineX, centerY + _waveY(waveT, i, waveAmplitude));
+    }
 
-      // Wave y-offset (used in the two wave phases).
-      double waveY(double phaseT) {
-        final radians = phaseT * math.pi * 2;
-        return math.sin(radians + i * (math.pi / 3)) * dotRadius * 1.8;
-      }
+    Offset circlePos(int i, double rotT) {
+      final baseAngle = (2 * math.pi * i / 3) - math.pi / 2;
+      final angle = baseAngle + rotT * math.pi * 2;
+      return Offset(
+        centerX + math.cos(angle) * orbitRadius,
+        centerY + math.sin(angle) * orbitRadius,
+      );
+    }
 
-      // Circle position with an arbitrary rotation amount `rotT` in [0..1].
-      Offset circlePos(double rotT) {
-        final baseAngle = (2 * math.pi * i / 3) - math.pi / 2;
-        final angle = baseAngle + rotT * math.pi * 2;
-        return Offset(
-          centerX + math.cos(angle) * orbitRadius,
-          centerY + math.sin(angle) * orbitRadius,
-        );
-      }
-
+    for (var i = 0; i < 3; i++) {
       Offset pos;
       double alpha;
 
-      if (t < _waveInEnd) {
-        // Phase 1 — wave in a line.
-        final p = t / _waveInEnd;
-        pos = Offset(lineX, centerY + waveY(p));
-        alpha = 0.55 + 0.45 * (0.5 + 0.5 * math.sin(p * math.pi * 2 + i));
-      } else if (t < _morphToCircleEnd) {
-        // Phase 2 — line collapses into circle.
-        final p = (t - _waveInEnd) / (_morphToCircleEnd - _waveInEnd);
-        final linePos = Offset(lineX, centerY + waveY(1.0));
-        final target = circlePos(0);
-        pos = Offset.lerp(linePos, target, Curves.easeOutCubic.transform(p))!;
-        alpha = 0.9;
-      } else if (t < _rotateEnd) {
-        // Phase 3 — orbit around center (full 2π rotation).
-        final p = (t - _morphToCircleEnd) / (_rotateEnd - _morphToCircleEnd);
-        pos = circlePos(p);
-        alpha = 0.9;
-      } else if (t < _morphToLineEnd) {
-        // Phase 4 — orbit unfolds back into the line.
-        final p = (t - _rotateEnd) / (_morphToLineEnd - _rotateEnd);
-        final start = circlePos(1);
-        final end = Offset(lineX, centerY);
-        pos = Offset.lerp(start, end, Curves.easeInOutCubic.transform(p))!;
-        alpha = 0.9;
+      if (t < _p1End) {
+        // Phase 1 — wave rippling through the "..." line.
+        final wt = t / _p1End;
+        pos = linePos(i, wt);
+        final bounceIntensity =
+            (-_waveY(wt, i, waveAmplitude)) / waveAmplitude;
+        alpha = 0.55 + 0.40 * bounceIntensity;
+      } else if (t < _p2End) {
+        // Phase 2 — dots slide out of the line into a triangle
+        // arrangement (start of the orbit).
+        final mt = (t - _p1End) / (_p2End - _p1End);
+        pos = Offset.lerp(
+          linePos(i, 1.0),
+          circlePos(i, 0),
+          Curves.easeInOutCubic.transform(mt),
+        )!;
+        alpha = 0.85;
+      } else if (t < _p3End) {
+        // Phase 3 — dots orbit around the center for a full 2π turn.
+        final rt = (t - _p2End) / (_p3End - _p2End);
+        pos = circlePos(i, rt);
+        alpha = 0.95;
+      } else if (t < _p4End) {
+        // Phase 4 — orbit unfolds, dots return to the "..." line.
+        final mt = (t - _p3End) / (_p4End - _p3End);
+        pos = Offset.lerp(
+          circlePos(i, 1.0),
+          linePos(i, 0),
+          Curves.easeInOutCubic.transform(mt),
+        )!;
+        alpha = 0.85;
       } else {
-        // Phase 5 — wave back in the line.
-        final p = (t - _morphToLineEnd) / (1.0 - _morphToLineEnd);
-        pos = Offset(lineX, centerY + waveY(p));
-        alpha = 0.55 + 0.45 * (0.5 + 0.5 * math.sin(p * math.pi * 2 + i));
+        // Phase 5 — final wave rippling back through the line,
+        // ready to loop seamlessly into Phase 1.
+        final wt = (t - _p4End) / (1.0 - _p4End);
+        pos = linePos(i, wt);
+        final bounceIntensity =
+            (-_waveY(wt, i, waveAmplitude)) / waveAmplitude;
+        alpha = 0.55 + 0.40 * bounceIntensity;
       }
 
       canvas.drawCircle(

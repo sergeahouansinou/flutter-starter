@@ -28,8 +28,10 @@ class AppDrawerIcon extends StatelessWidget {
       child: InkResponse(
         onTap: onTap,
         radius: size,
+        containedInkWell: true,
+        highlightShape: BoxShape.circle,
         child: Padding(
-          padding: const EdgeInsets.all(6),
+          padding: const EdgeInsets.all(3),
           child: CustomPaint(
             size: Size(size, size),
             painter: _DrawerIconPainter(
@@ -54,16 +56,16 @@ class _DrawerIconPainter extends CustomPainter {
     final barPaint = Paint()
       ..color = barColor
       ..strokeCap = StrokeCap.round
-      ..strokeWidth = 2.2
+      ..strokeWidth = 1.8
       ..style = PaintingStyle.stroke;
 
     final w = size.width;
     final h = size.height;
 
-    // Top bar (75% width, slightly offset right)
+    // Top bar (~75% width)
     canvas.drawLine(
       Offset(w * 0.15, h * 0.28),
-      Offset(w * 0.75, h * 0.28),
+      Offset(w * 0.72, h * 0.28),
       barPaint,
     );
 
@@ -74,7 +76,7 @@ class _DrawerIconPainter extends CustomPainter {
       barPaint,
     );
 
-    // Bottom bar (55% width)
+    // Bottom bar (~55% width)
     canvas.drawLine(
       Offset(w * 0.15, h * 0.76),
       Offset(w * 0.55, h * 0.76),
@@ -83,8 +85,8 @@ class _DrawerIconPainter extends CustomPainter {
 
     // Accent dot in the top-right corner
     canvas.drawCircle(
-      Offset(w * 0.86, h * 0.28),
-      2.4,
+      Offset(w * 0.84, h * 0.28),
+      1.6,
       Paint()..color = accentColor,
     );
   }

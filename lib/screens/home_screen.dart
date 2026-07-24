@@ -118,12 +118,15 @@ class _HomeScreenState extends State<HomeScreen>
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        leadingWidth: 40,
         leading: Builder(
-          builder: (ctx) => AppDrawerIcon(
-            onTap: () => Scaffold.of(ctx).openDrawer(),
+          builder: (ctx) => Center(
+            child: AppDrawerIcon(
+              onTap: () => Scaffold.of(ctx).openDrawer(),
+            ),
           ),
         ),
-        titleSpacing: 4,
+        titleSpacing: 0,
         title: const Text('Cardifly'),
         actions: [
           IconButton(
