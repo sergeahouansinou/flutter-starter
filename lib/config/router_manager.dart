@@ -1,5 +1,6 @@
 import 'package:cardifly/anims/page_route_anim.dart';
-import 'package:cardifly/screens/home_one/home_screen.dart';
+
+import 'package:cardifly/screens/home_two/home_two.dart';
 import 'package:flutter/material.dart';
 
 class RouteName {
@@ -14,9 +15,9 @@ class RouterConfig {
   static Route<dynamic> generateRoute(RouteSettings settings) {
     switch (settings.name) {
       case RouteName.home:
-        return NoAnimRouteBuilder(const HomeScreen());
+        return NoAnimRouteBuilder(const HomeTwo());
       default:
-        return NoAnimRouteBuilder(const HomeScreen());
+        return NoAnimRouteBuilder(const HomeTwo());
     }
   }
 }

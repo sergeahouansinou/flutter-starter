@@ -37,6 +37,7 @@ dependencies:
 
   # Files
   cross_file: ^0.3.5+4
+  svg_flutter: ^0.0.1
 
 dev_dependencies:
   flutter_test:
@@ -49,3 +50,4 @@ flutter:
 
   assets:
     - assets/dogs/
+    - assets/svg/

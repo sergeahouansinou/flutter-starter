@@ -1,17 +1,23 @@
 import 'package:cardifly/ui/components/app_loader.dart';
 import 'package:cardifly/utils/constants.dart';
 import 'package:flutter/material.dart';
+import 'package:svg_flutter/svg.dart';
 
 /// Compact primary button.
+///
+/// The leading glyph accepts either a Material [icon] or an [svgIcon] asset
+/// path (e.g. `assets/svg/google.svg`) — never both.
 class AppButtonWidget extends StatelessWidget {
   const AppButtonWidget({
     super.key,
     required this.title,
     required this.onPressed,
     this.icon,
+    this.svgIcon,
+    this.iconSize,
     this.width,
     this.height = 36,
-    this.enabled = true,
+    this.enabled = false,
     this.loading = false,
     this.backgroundColor = Constants.appPrimaryColor,
     this.borderColor,
@@ -19,7 +25,10 @@ class AppButtonWidget extends StatelessWidget {
     this.labelColor = Colors.white,
     this.small = false,
     this.radius = 10,
-  });
+  }) : assert(
+         icon == null || svgIcon == null,
+         'Provide either `icon` or `svgIcon`, not both.',
+       );
 
   final String title;
   final VoidCallback onPressed;
@@ -30,13 +39,47 @@ class AppButtonWidget extends StatelessWidget {
   final Color? borderColor;
   final Color labelColor;
   final IconData? icon;
+
+  /// Asset path of an SVG to use as the leading glyph, instead of [icon].
+  final String? svgIcon;
+
+  /// Overrides the default glyph size (12 when [small], 15 otherwise).
+  final double? iconSize;
+
   final bool enabled;
   final double height;
   final bool small;
   final double radius;
 
+  /// Leading glyph, or `null` when neither [icon] nor [svgIcon] is set.
+  ///
+  /// An [svgIcon] keeps its own colours unless [iconColor] is provided, so
+  /// multicolour brand logos (Google, Facebook…) render untouched while
+  /// monochrome pictograms can still be tinted to match [labelColor].
+  Widget? get _glyph {
+    final size = iconSize ?? (small ? 12.0 : 15.0);
+
+    if (svgIcon != null) {
+      return SvgPicture.asset(
+        svgIcon!,
+        width: size,
+        height: size,
+        colorFilter: iconColor == null
+            ? null
+            : ColorFilter.mode(iconColor!, BlendMode.srcIn),
+      );
+    }
+
+    if (icon != null) {
+      return Icon(icon, size: size, color: iconColor ?? labelColor);
+    }
+
+    return null;
+  }
+
   @override
   Widget build(BuildContext context) {
+    final glyph = _glyph;
     final effectiveBg = !enabled
         ? Colors.grey.shade400
         : loading
@@ -53,7 +96,7 @@ class AppButtonWidget extends StatelessWidget {
             color: borderColor ?? Colors.transparent,
             width: borderColor != null ? 1.2 : 0,
           ),
-          gradient: enabled && !loading
+          gradient: !enabled && !loading
               ? LinearGradient(
                   colors: [
                     backgroundColor,
@@ -63,7 +106,7 @@ class AppButtonWidget extends StatelessWidget {
                   end: Alignment.bottomRight,
                 )
               : null,
-          color: enabled && !loading ? null : effectiveBg,
+          color: !enabled && !loading ? null : effectiveBg,
         ),
         child: Material(
           color: Colors.transparent,
@@ -82,12 +125,8 @@ class AppButtonWidget extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.center,
                         mainAxisSize: MainAxisSize.min,
                         children: [
-                          if (icon != null) ...[
-                            Icon(
-                              icon,
-                              size: small ? 12 : 15,
-                              color: iconColor ?? labelColor,
-                            ),
+                          if (glyph != null) ...[
+                            glyph,
                             const SizedBox(width: 6),
                           ],
                           Flexible(
