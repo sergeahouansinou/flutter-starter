@@ -1,4 +1,4 @@
-import 'package:cardifly/screens/auth/_partials/social_icon_button.dart';
+import 'package:cardifly/screens/auth/sign_in_screens/sign_one/_partials/social_icon_button.dart';
 import 'package:flutter/material.dart';
 
 class SocialLoginRow extends StatelessWidget {

@@ -1,5 +1,5 @@
 import 'package:cardifly/anims/page_route_anim.dart';
-import 'package:cardifly/screens/auth/login_one.dart';
+import 'package:cardifly/screens/auth/sign_in_screens/sign_one/login_one.dart';
 
 import 'package:cardifly/screens/home_two/home_two.dart';
 import 'package:flutter/material.dart';

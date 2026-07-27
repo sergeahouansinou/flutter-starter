@@ -1,3 +1,4 @@
+import 'package:cardifly/ui/components/app_fade_in.dart';
 import 'package:cardifly/utils/constants.dart';
 import 'package:flutter/material.dart';
 
@@ -30,12 +31,15 @@ class AuthBackgroundDecoration extends StatelessWidget {
       right: right,
       top: top,
       bottom: bottom,
-      child: Container(
-        height: size,
-        width: size,
-        decoration: BoxDecoration(
-          color: Constants.appPrimaryColor.withValues(alpha: opacity),
-          shape: BoxShape.circle,
+      child: AppFadeIn(
+        direction: AppFadeDirection.fromTop,
+        child: Container(
+          height: size,
+          width: size,
+          decoration: BoxDecoration(
+            color: Constants.appPrimaryColor.withValues(alpha: opacity),
+            shape: BoxShape.circle,
+          ),
         ),
       ),
     );
