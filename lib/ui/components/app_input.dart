@@ -35,7 +35,7 @@ class AppInput extends StatefulWidget {
     this.prefixIcon,
     this.width,
     this.minLines = 1,
-    this.radius = 10.0,
+    this.radius = 8.0,
     this.showClearButton = false,
   });
 
@@ -130,15 +130,6 @@ class _AppInputState extends State<AppInput>
           child: DecoratedBox(
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(widget.radius),
-              boxShadow: [
-                BoxShadow(
-                  color: Constants.appPrimaryColor.withValues(
-                    alpha: 0.10 * _elevationAnimation.value,
-                  ),
-                  blurRadius: 10 * _elevationAnimation.value,
-                  offset: const Offset(0, 3),
-                ),
-              ],
             ),
             child: child,
           ),
@@ -168,7 +159,7 @@ class _AppInputState extends State<AppInput>
         autofillHints: widget.autofillHints,
         textCapitalization: widget.textCapitalization,
         style: widget.textStyle ??
-            TextStyle(fontSize: 12, color: subtle?.withValues(alpha: 1.0)),
+            TextStyle(fontSize: 13, color: subtle?.withValues(alpha: 1.0)),
         decoration: InputDecoration(
           isDense: true,
           contentPadding: const EdgeInsets.symmetric(
@@ -183,7 +174,7 @@ class _AppInputState extends State<AppInput>
                   text: TextSpan(
                     text: '${widget.label} ',
                     style: TextStyle(
-                      fontSize: 11,
+                      fontSize: 13,
                       color: subtle,
                       fontFamily: 'Poppins',
                     ),
@@ -197,15 +188,15 @@ class _AppInputState extends State<AppInput>
                   ),
                 ),
           hintText: widget.hintText,
-          hintStyle: TextStyle(color: subtle, fontSize: 12),
+          hintStyle: TextStyle(color: subtle, fontSize: 13),
           prefixIcon: widget.prefixIcon != null
-              ? Icon(widget.prefixIcon, size: 16, color: subtle)
+              ? Icon(widget.prefixIcon, size: 18, color: subtle)
               : null,
           prefixIconConstraints:
-              const BoxConstraints(minWidth: 32, minHeight: 32),
+              const BoxConstraints(minWidth: 32, minHeight: 40),
           suffixIcon: _buildSuffixIcon(subtle),
           suffixIconConstraints:
-              const BoxConstraints(minWidth: 32, minHeight: 32),
+              const BoxConstraints(minWidth: 32, minHeight: 40),
         ),
       ),
     );
@@ -225,6 +216,10 @@ class _AppInputState extends State<AppInput>
         splashRadius: 14,
         constraints: const BoxConstraints(minWidth: 30, minHeight: 30),
         padding: EdgeInsets.zero,
+        visualDensity: VisualDensity.compact,
+        style: IconButton.styleFrom(
+          tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+        ),
       );
     }
     if (widget.suffixIcon != null) {
@@ -235,6 +230,10 @@ class _AppInputState extends State<AppInput>
         splashRadius: 14,
         constraints: const BoxConstraints(minWidth: 30, minHeight: 30),
         padding: EdgeInsets.zero,
+        visualDensity: VisualDensity.compact,
+        style: IconButton.styleFrom(
+          tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+        ),
       );
     }
     return null;

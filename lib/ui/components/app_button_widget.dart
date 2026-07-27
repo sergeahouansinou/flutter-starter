@@ -16,8 +16,8 @@ class AppButtonWidget extends StatelessWidget {
     this.svgIcon,
     this.iconSize,
     this.width,
-    this.height = 36,
-    this.enabled = false,
+    this.height = 42,
+    this.enabled = true,
     this.loading = false,
     this.backgroundColor = Constants.appPrimaryColor,
     this.borderColor,
@@ -96,7 +96,7 @@ class AppButtonWidget extends StatelessWidget {
             color: borderColor ?? Colors.transparent,
             width: borderColor != null ? 1.2 : 0,
           ),
-          gradient: !enabled && !loading
+          gradient: enabled && !loading
               ? LinearGradient(
                   colors: [
                     backgroundColor,
@@ -106,7 +106,7 @@ class AppButtonWidget extends StatelessWidget {
                   end: Alignment.bottomRight,
                 )
               : null,
-          color: !enabled && !loading ? null : effectiveBg,
+          color: enabled && !loading ? null : effectiveBg,
         ),
         child: Material(
           color: Colors.transparent,

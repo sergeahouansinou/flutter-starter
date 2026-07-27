@@ -56,7 +56,7 @@ class MainApp extends StatelessWidget {
               themeMode: themeModel.isDark ? ThemeMode.dark : ThemeMode.light,
               navigatorKey: NavigationService.navigatorKey,
               locale: localeModel.locale,
-              initialRoute: router.RouteName.home,
+              initialRoute: router.RouteName.loginOne,
               onGenerateRoute: router.RouterConfig.generateRoute,
               localizationsDelegates: const [
                 S.delegate,

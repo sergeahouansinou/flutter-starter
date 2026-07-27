@@ -41,7 +41,7 @@ class Constants {
       'https://apps.apple.com/us/app/cardifly/id............';
 
   // Palette
-  static const Color appPrimaryColor = Color(0xFF0F70B7);
+  static const Color appPrimaryColor = Color.fromARGB(255, 10, 74, 120);
   static const Color appSecondaryColor = Color(0xFFEDD13A);
   static const Color appDarkScaffold = Color(0xFF1A2037);
   static const Color appDarkCardColor = Color(0xFF283151);
