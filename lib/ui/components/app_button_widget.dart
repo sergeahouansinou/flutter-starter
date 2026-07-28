@@ -81,7 +81,7 @@ class AppButtonWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final glyph = _glyph;
     final effectiveBg = !enabled
-        ? Colors.grey.shade400
+        ? Colors.transparent
         : loading
             ? backgroundColor.withValues(alpha: 0.75)
             : backgroundColor;
@@ -96,17 +96,7 @@ class AppButtonWidget extends StatelessWidget {
             color: borderColor ?? Colors.transparent,
             width: borderColor != null ? 1.2 : 0,
           ),
-          gradient: enabled && !loading
-              ? LinearGradient(
-                  colors: [
-                    backgroundColor,
-                    backgroundColor.withValues(alpha: 0.85),
-                  ],
-                  begin: Alignment.topLeft,
-                  end: Alignment.bottomRight,
-                )
-              : null,
-          color: enabled && !loading ? null : effectiveBg,
+          color: enabled && !loading ? backgroundColor : effectiveBg,
         ),
         child: Material(
           color: Colors.transparent,

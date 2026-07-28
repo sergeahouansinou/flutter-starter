@@ -50,4 +50,6 @@ flutter:
 
   assets:
     - assets/dogs/
+    - assets/images/
     - assets/svg/
+    - assets/images/

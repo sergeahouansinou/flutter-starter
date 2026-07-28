@@ -47,3 +47,7 @@ app.*.map.json
 # Local AI assistant instructions — not versioned
 CLAUDE.md
 .claude/
+
+# Agent skills installed locally via `npx skills add` — not versioned
+.agents/
+skills-lock.json
