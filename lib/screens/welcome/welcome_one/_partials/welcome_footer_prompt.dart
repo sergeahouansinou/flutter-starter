@@ -2,7 +2,6 @@ import 'package:cardifly/screens/welcome/welcome_one/_partials/welcome_palette.d
 import 'package:cardifly/ui/theme/app_text.dart';
 import 'package:flutter/material.dart';
 
-/// "Already a member?" line closing the welcome wall.
 class WelcomeFooterPrompt extends StatelessWidget {
   const WelcomeFooterPrompt({
     super.key,
@@ -20,8 +19,6 @@ class WelcomeFooterPrompt extends StatelessWidget {
     final palette = WelcomePalette.of(context);
     final radius = BorderRadius.circular(10);
 
-    // Merging folds the two spans and the tap action into one node, so a
-    // screen reader announces a single button instead of loose fragments.
     return MergeSemantics(
       child: Semantics(
         button: true,

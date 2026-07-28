@@ -1,3 +1,4 @@
+import 'package:cardifly/config/router_manager.dart';
 import 'package:cardifly/screens/auth/sign_in_screens/sign_one/_partials/auth_background_decoration.dart';
 import 'package:cardifly/screens/auth/sign_in_screens/sign_one/_partials/auth_brand_header.dart';
 import 'package:cardifly/screens/auth/sign_in_screens/sign_one/_partials/auth_divider.dart';
@@ -75,7 +76,8 @@ class LoginOne extends StatelessWidget {
                   child: AuthRedirectPrompt(
                     question: "Don't have an account ?",
                     actionLabel: 'Sign Up',
-                    onTap: () {},
+                    onTap: () =>
+                        Navigator.of(context).pushNamed(RouteName.signUpOne),
                   ),
                 ),
                 const SizedBox(height: 40),

@@ -53,10 +53,7 @@ class OnboardingTextBlock extends StatelessWidget {
     );
   }
 
-  /// Room this block needs at the given text scale.
   static double heightFor(TextScaler scaler) {
-    // Rounded up per line: the painted line box is quantised, and the exact
-    // product comes up short enough to overflow at large text scales.
     double block(double size, double leading, int lines) =>
         (scaler.scale(size) * leading).ceilToDouble() * lines;
 

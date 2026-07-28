@@ -77,8 +77,10 @@ class ProviderRequest with ChangeNotifier {
               message: 'Votre session a expiré, veuillez vous reconnecter',
               type: FeedbackType.error,
             );
+            // Cross-fade: the stack is wiped, so no directional motion should
+            // suggest the user can head back to where the session died.
             NavigationService.navigatorKey.currentState?.pushAndRemoveUntil(
-              KyNavigate.slideIn(const HomeScreen()),
+              KyNavigate.fadeIn(const HomeScreen()),
               (route) => false,
             );
           case 422:

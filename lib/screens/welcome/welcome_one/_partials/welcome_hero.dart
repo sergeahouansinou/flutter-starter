@@ -3,7 +3,6 @@ import 'package:cardifly/ui/theme/app_text.dart';
 import 'package:flutter/material.dart';
 import 'package:svg_flutter/svg.dart';
 
-/// Illustration, eyebrow, headline and supporting line of the welcome wall.
 class WelcomeHero extends StatelessWidget {
   const WelcomeHero({
     super.key,
@@ -17,11 +16,7 @@ class WelcomeHero extends StatelessWidget {
   final String eyebrow;
   final String title;
   final String subtitle;
-
-  /// Sized by the screen so the artwork shrinks on short devices instead of
-  /// pushing the buttons off.
   final double illustrationHeight;
-
   final String illustrationAsset;
 
   @override

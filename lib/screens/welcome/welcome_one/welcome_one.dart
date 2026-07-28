@@ -106,8 +106,6 @@ class WelcomeTwo extends StatelessWidget {
   void _onSignIn(BuildContext context) =>
       Navigator.pushNamed(context, RouteName.loginOne);
 
-  /// The onboarding replaced itself on the way here, so there is nothing to
-  /// pop back to — it has to be pushed again.
   void _onClose(BuildContext context) =>
       Navigator.pushReplacementNamed(context, RouteName.onboardingOne);
 

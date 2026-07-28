@@ -3,10 +3,6 @@ import 'package:cardifly/ui/theme/app_text.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
-/// Consent line shown under the sign-in options.
-///
-/// Stateful only because the two spans own [TapGestureRecognizer]s, which have
-/// to be disposed.
 class WelcomeLegalNotice extends StatefulWidget {
   const WelcomeLegalNotice({
     super.key,

@@ -24,8 +24,6 @@ class SocialAuthButtons extends StatelessWidget {
       children: [
         _button(palette, 'Continuer avec Google', 'google.svg', onGoogle),
         SizedBox(height: spacing),
-        // The Apple mark is monochrome, so it has to follow the theme instead
-        // of keeping its own colour like the other two.
         _button(
           palette,
           'Continuer avec Apple',
